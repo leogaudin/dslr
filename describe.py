@@ -1,5 +1,14 @@
 import pandas as pd
-from stats import ft_mean, ft_std, ft_min, ft_25, ft_median, ft_75, ft_max
+from stats import (
+    ft_mean,
+    ft_std,
+    ft_min,
+    ft_25,
+    ft_median,
+    ft_75,
+    ft_max,
+    ft_var,
+)
 import sys
 
 
@@ -14,6 +23,7 @@ def main():
         df = pd.read_csv(sys.argv[1], index_col=False)
         del df['Index']  # Delete Index column
         df.fillna(0, inplace=True)  # Fill NaN values with 0
+        pd.options.display.float_format = '{:.1f}'.format  # 2 decimals only
 
         feature_columns = df.select_dtypes('number').columns.tolist()
         describe_df = pd.DataFrame(columns=['Stat name', *feature_columns])
@@ -22,6 +32,7 @@ def main():
             'Count': len,
             'Mean': ft_mean,
             'Std': ft_std,
+            'Var': ft_var,
             'Min': ft_min,
             '25%': ft_25,
             '50%': ft_median,
