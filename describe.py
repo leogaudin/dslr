@@ -9,6 +9,7 @@ from stats import (
     ft_max,
     ft_var,
 )
+from preprocessing import load_data
 import sys
 
 
@@ -20,10 +21,7 @@ def main():
         if len(sys.argv) != 2:
             raise IndexError('Please enter one argument.')
 
-        df = pd.read_csv(sys.argv[1], index_col=False)
-        del df['Index']  # Delete Index column
-        df.fillna(0, inplace=True)  # Fill NaN values with 0
-        pd.options.display.float_format = '{:.1f}'.format  # 2 decimals only
+        df = load_data(sys.argv[1])
 
         feature_columns = df.select_dtypes('number').columns.tolist()
         describe_df = pd.DataFrame(columns=['Stat name', *feature_columns])
