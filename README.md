@@ -45,12 +45,96 @@ And worst of all, appendix VIII.1, *Mathematics*:
 
 ### Logistic Regression
 
+Logistic Regression is a classification algorithm used to tell if an object is part of a class or not.
+
+Unlike linear regression which takes a scalar input and gives a scalar output (e.g. `price = mileage * weight`), logistic regression gives a probability of the input being part of a class (e.g. `[0, 1] = input * weight`).
+
+![Sigmoid Example](./assets/sigmoid_example.webp)
+
+> *Here, the sigmoid function gives the probability of a student passing their exam based on the number of hours they studied.*
+
 ### Multi-classifier
+
+Multi-classification is simply when you have more than 2 classes to classify.
+
+Instead of having a binary class like "obese" or "not obese", you have multiple classes like `Gryffindor`, `Hufflepuff`, `Ravenclaw`, or `Slytherin`.
+
+That is where one-vs-all comes in.
 
 ### One-vs-all
 
+The one-vs-all strategy is a way to apply the logic we just described to the problem of having multiple classes.
+
+Let's take the example from [this lecture](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5):
+
+> Suppose you have classes `A`, `B`, and `C`. We will build one model for each class:
+>
+> - Model 1: `A` or `BC`
+> - Model 2: `B` or `AC`
+> - Model 3: `C` or `AB`
+>
+> Another way to think about the models is each class vs everything else (hence the name):
+>
+> - Model 1: `A` or not `A`
+> - Model 2: `B` or not `B`
+> - Model 3: `C` or not `C`
+
+In our case, we will have 4 models:
+
+- Model 1: `Gryffindor` or not `Gryffindor`
+- Model 2: `Hufflepuff` or not `Hufflepuff`
+- Model 3: `Ravenclaw` or not `Ravenclaw`
+- Model 4: `Slytherin` or not `Slytherin`
+
 ### Mathematics
 
+Now let's dive into this appendix, starting with the last equation before the derivative:
+
+$$
+g(z) = \frac{1}{1 + e^{-z}}
+$$
+
+This is the sigmoid function we talked about earlier, the blue line representing the probability of passing the exam.
+
+![Sigmoid curve](./assets/sigmoid_curve.gif)
+
+> *Here is how the sigmoid curve changes based on the value of `z`. The higher `z` is, the steeper the curve is, i.e. there is a threshold where the probability goes from 0 to 1 almost instantly.*
+
+Then, we have the hypothesis function:
+
+$$
+h_{\theta}(x) = g(\theta^T x)
+$$
+
+$h_{\theta}(x)$ is the hypothesis we are making based on the input $x$ and the weights $\theta$ passed to $g(z)$.
+
+We just learned what was this $g(z)$, but what about $\theta^T x$?
+
+The $T$ in $\theta^T$ means "transpose". This implies that we are working with vectors.
+
+Indeed, we have many parameters in our dataset, not a single one like in `ft_linear_regression`.
+
+Our variables should then look like this:
+
+$$
+\theta = \begin{bmatrix}
+w_{\text{param1}} \\
+w_{\text{param2}} \\
+w_{\text{param3}} \\
+... \\
+\end{bmatrix}
+$$
+
+$$
+x = \begin{bmatrix}
+\text{param1} \\
+\text{param2} \\
+\text{param3} \\
+... \\
+\end{bmatrix}
+$$
+
+It is simply a way of reprensenting the weights and the input in a more compact way, the same way we had $y = \theta_0 + \theta_1 x$ in `ft_linear_regression`.
 
 ---
 
@@ -68,3 +152,4 @@ I suppose that we would give a student to each of the 4 classifiers, each one wo
 
 - [📺 Multiclass - One-vs-rest classification](https://www.youtube.com/watch?v=EYXSve6T5BU)
 - [📺 Logistic Regression Cost Function | Machine Learning | Simply Explained](https://www.youtube.com/watch?v=ar8mUO3d05w)
+- [📖 Multi-Class Classification: One-vs-All](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5)
