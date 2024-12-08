@@ -174,6 +174,7 @@ This operation gives us a scalar (i.e. a single value), which is what we want to
 # Resources
 
 - [📺 YouTube − Multiclass - One-vs-rest classification](https://www.youtube.com/watch?v=EYXSve6T5BU)
+- [📺 YouTube − Logistic Regression Machine Learning Example | Simply Explained](https://www.youtube.com/watch?v=U1omz0B9FTw)
 - [📺 YouTube − Logistic Regression Cost Function | Machine Learning | Simply Explained](https://www.youtube.com/watch?v=ar8mUO3d05w)
 - [📖 Rice University − Multi-Class Classification: One-vs-All](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5)
 - [💬 Stack Exchange − Theta * X vs Sum_j=1(Theta_j * x_j)](https://math.stackexchange.com/questions/3485981/thetatx-vs-sum-j-1n-theta-j-x-j)
