@@ -6,6 +6,14 @@
 
 - [Introduction](#introduction) 👋
 - [Decrypting the subject](#decrypting-the-subject) 🔍
+	- [Logistic Regression](#logistic-regression) 📈
+	- [Multi-classifier](#multi-classifier) 🔢
+	- [One-vs-all](#one-vs-all) 🏁
+	- [Mathematics](#mathematics) 🧮
+		- [Sigmoid function](#sigmoid-function) 📈
+		- [Hypothesis function](#hypothesis-function) 🤔
+		- [Cost function](#cost-function) 💰
+		- [Derivative of the cost function](#derivative-of-the-cost-function) 📉
 - [Resources](#resources) 📖
 
 ## Introduction
@@ -90,6 +98,8 @@ In our case, we will have 4 models:
 
 Now let's dive into this appendix, starting with the last equation before the derivative:
 
+#### Sigmoid function
+
 $$
 g(z) = \frac{1}{1 + e^{-z}}
 $$
@@ -100,7 +110,7 @@ This is the sigmoid function we talked about earlier, the blue line representing
 
 > *Here is how the sigmoid curve changes based on the value of `z`. The higher `z` is, the steeper the curve is, i.e. there is a threshold where the probability goes from 0 to 1 almost instantly.*
 
-Then, we have the hypothesis function:
+#### Hypothesis function
 
 $$
 h_{\theta}(x) = g(\theta^T x)
@@ -110,18 +120,22 @@ $h_{\theta}(x)$ is the hypothesis we are making based on the input $x$ and the w
 
 We just learned what was this $g(z)$, but what about $\theta^T x$?
 
-The $T$ in $\theta^T$ means "transpose". This implies that we are working with vectors.
+The $T$ in $\theta^T$ means "transpose", which is a vector operation.
 
-Indeed, we have many parameters in our dataset, not a single one like in `ft_linear_regression`.
+Indeed, we have many parameters in our dataset, not a single one like in `ft_linear_regression`. We therefore need to "group" them in a vector.
 
-Our variables should then look like this:
+> 💡 If you arrived here right after C, think of it as a 1-D array.
+>
+> If you are not familiar with vectors and matrices, you should do the `matrix` project, that can bring you very interesting bases for `dslr`.
+
+Assuming that $\theta$ and $x$ are both column vectors as follows:
 
 $$
 \theta = \begin{bmatrix}
 w_{\text{param1}} \\
 w_{\text{param2}} \\
 w_{\text{param3}} \\
-... \\
+\ldots
 \end{bmatrix}
 $$
 
@@ -130,26 +144,38 @@ x = \begin{bmatrix}
 \text{param1} \\
 \text{param2} \\
 \text{param3} \\
-... \\
+\ldots
 \end{bmatrix}
 $$
 
-It is simply a way of reprensenting the weights and the input in a more compact way, the same way we had $y = \theta_0 + \theta_1 x$ in `ft_linear_regression`.
+"Multiplying" them as they are, with an element-wise product for example, would result in a third vector that would look like:
 
----
+$$
+\theta x = \begin{bmatrix}
+w_{\text{param1}} \times \text{param1} \\
+w_{\text{param2}} \times \text{param2} \\
+w_{\text{param3}} \times \text{param3} \\
+\ldots
+\end{bmatrix}
+$$
 
-## Temporary dump of information
+The notation $\theta^T x$ is a way of clarifying we are doing a dot product between the two vectors, which would look like:
 
-A multi-classifier simply is (I think), many binary classifiers that each answer to the question *"is this object part of class `x`"*?
+$$
+\theta^T x = w_{\text{param1}} \times \text{param1} + w_{\text{param2}} \times \text{param2} + w_{\text{param3}} \times \text{param3} + \ldots
+$$
 
-In this case, it would be 4 classifiers that each answer to *"is this student part of `Gryffindor | Hufflepuff | Ravenclaw | Slytherin`"*?
+This operation gives us a scalar (i.e. a single value), which is what we want to pass to the sigmoid function.
 
-I suppose that we would give a student to each of the 4 classifiers, each one would give a probability of the student being part of their Hogwarts house, e.g. `Gryffindor: 0.8, Hufflepuff: 0.1, Ravenclaw: 0.05, Slytherin: 0.05`, and we would tell all of them, *"actually, it's `Gryffindor: 0, Hufflepuff: 0, Ravenclaw: 0, Slytherin: 1`"*, for each student.
+#### Cost function
 
----
+#### Derivative of the cost function
 
 # Resources
 
-- [📺 Multiclass - One-vs-rest classification](https://www.youtube.com/watch?v=EYXSve6T5BU)
-- [📺 Logistic Regression Cost Function | Machine Learning | Simply Explained](https://www.youtube.com/watch?v=ar8mUO3d05w)
-- [📖 Multi-Class Classification: One-vs-All](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5)
+- [📺 YouTube − Multiclass - One-vs-rest classification](https://www.youtube.com/watch?v=EYXSve6T5BU)
+- [📺 YouTube − Logistic Regression Cost Function | Machine Learning | Simply Explained](https://www.youtube.com/watch?v=ar8mUO3d05w)
+- [📖 Rice University − Multi-Class Classification: One-vs-All](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5)
+- [💬 Stack Exchange − Theta * X vs Sum_j=1(Theta_j * x_j)](https://math.stackexchange.com/questions/3485981/thetatx-vs-sum-j-1n-theta-j-x-j)
+- [💬 Stack Exchange − Theta transposes to x](https://math.stackexchange.com/questions/60212/theta-transposes-to-x)
+- [📖 Wikipedia − Dot product](https://en.wikipedia.org/wiki/Dot_product)
