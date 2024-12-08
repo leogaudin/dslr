@@ -13,7 +13,7 @@
 		- [Sigmoid function](#sigmoid-function) 📈
 		- [Hypothesis function](#hypothesis-function) 🤔
 		- [Cost function](#cost-function) 💰
-		- [Derivative of the cost function](#derivative-of-the-cost-function) 📉
+		- [Gradient descent](#gradient-descent) 📉
 - [Resources](#resources) 📖
 
 ## Introduction
@@ -210,13 +210,100 @@ What this cost function does is give **exponential importance** to the error we 
 >
 > The negative log-loss function makes the first hypothesis twice as bad as the second one, although they are only 0.1 apart.
 
-#### Derivative of the cost function
+#### Gradient descent
+
+Great, now we know how to determine how bad our hypothesis is.
+
+If we were in `ft_linear_regression`, we simply would need to derive it to know in what direction and how much we should correct our weights, to make our hypothesis less lame.
+
+But here, we have multiple weights and parameters, so the problem is a bit more complex.
+
+Yes, we know how to calculate a global sum of all the errors we are making, but how do we know **how to individually correct each parameter**?
+
+The subject says:
+
+> The loss function gives us the following partial derivative:
+>
+> $$
+> \frac{\partial J(\theta)}{\partial \theta_j} = \frac{1}{m} \sum_{i=1}^{m} (h_{\theta}(x_i) - y_i) x_{ij}
+> $$
+>
+> This is the derivative of the cost function with respect to the $j$-th parameter of $\theta$.
+
+Let's say we are in the middle of training our model.
+
+We have the following parameters/weights:
+
+$$
+\theta = \begin{bmatrix}
+0.5 \\
+0.3 \\
+0.2 \\
+\end{bmatrix}
+$$
+
+The following input:
+
+$$
+x = \begin{bmatrix}
+1 \\
+2 \\
+3 \\
+\end{bmatrix}
+$$
+
+The following output (actual value):
+
+$$
+y = 1
+$$
+
+And the following hypothesis:
+
+$$
+y_{\text{predicted}} = 0.7
+$$
+
+We can calculate the derivative of the cost function with respect to each parameter, which for the first element of $\theta$ and $x$ would give:
+
+$$
+(0.7 - 1) \times 1 = -0.3
+$$
+
+$$
+(0.7 - 1) \times 2 = -0.6
+$$
+
+$$
+(0.7 - 1) \times 3 = -0.9
+$$
+
+> ⚠️ This assumes $m = 1$ for simplicity, i.e. we only have one observation in our dataset.
+
+We would then update our parameters as follows:
+
+$$
+\theta = \begin{bmatrix}
+0.5 - 0.3 \\
+0.3 - 0.6 \\
+0.2 - 0.9 \\
+\end{bmatrix}
+= \begin{bmatrix}
+0.2 \\
+-0.3 \\
+-0.7 \\
+\end{bmatrix}
+$$
+
+> ⚠️ We also omitted the learning rate $\alpha$ for simplicity, but it should be there in your implementation.
 
 # Resources
 
 - [📺 YouTube − Multiclass - One-vs-rest classification](https://www.youtube.com/watch?v=EYXSve6T5BU)
-- [📺 YouTube − Logistic Regression Machine Learning Example | Simply Explained](https://www.youtube.com/watch?v=U1omz0B9FTw)
-- [📺 YouTube − Logistic Regression Cost Function | Machine Learning | Simply Explained](https://www.youtube.com/watch?v=ar8mUO3d05w)
+- [📺 YouTube − Logistic Regression Machine Learning Example](https://www.youtube.com/watch?v=U1omz0B9FTw)
+- [📺 YouTube − Logistic Regression Cost Function](https://www.youtube.com/watch?v=ar8mUO3d05w)
+- [📺 YouTube − Derivative of Cost function for Logistic Regression](https://www.youtube.com/watch?v=0VMK18nphpg)
+- [📺 YouTube − Logistic Regression in Python from Scratch](https://www.youtube.com/watch?v=nzNp05AyBM8)
 - [📖 Rice University − Multi-Class Classification: One-vs-All](https://www.cs.rice.edu/~as143/COMP642_Spring22/Scribes/Lect5)
 - [💬 Stack Exchange − Theta * X vs Sum_j=1(Theta_j * x_j)](https://math.stackexchange.com/questions/3485981/thetatx-vs-sum-j-1n-theta-j-x-j)
 - [💬 Stack Exchange − Theta transposes to x](https://math.stackexchange.com/questions/60212/theta-transposes-to-x)
