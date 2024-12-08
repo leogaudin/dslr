@@ -198,7 +198,7 @@ What this cost function does is give **exponential importance** to the error we 
 
 ![Negative log-loss function](./assets/neg_log.webp)
 
-> *See how the closer we are from 1, the lower $- \log(x)$ is, i.e. the less importance the difference is, and as we get closer to 0, the higher it is.*
+> See how the closer we are from 1, the lower $- \log(x)$ is, i.e. the less importance the difference is, and as we get closer to 0, the higher it is.
 >
 > Example:
 >
