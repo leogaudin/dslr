@@ -169,6 +169,47 @@ This operation gives us a scalar (i.e. a single value), which is what we want to
 
 #### Cost function
 
+Now that we know what $g(z)$ and $h_{\theta}(x)$ are, let's dive into the cost function, formally known as the **negative log-loss function**.
+
+$$
+J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y_i \log(h_{\theta}(x_i)) + (1 - y_i) \log(1 - h_{\theta}(x_i)) \right]
+$$
+
+To make it lighter on our eyes, let's declare that $h_{\theta}(x)$ is equivalent to $y_{\text{predicted}}$, literally the value we predicted $y$ to be based on our hypothesis.
+
+$$
+J(\theta) = -\frac{1}{m} \sum_{i=1}^{m} \left[ y_i \log(y_{\text{predicted}}) + (1 - y_i) \log(1 - y_{\text{predicted}}) \right]
+$$
+
+Now, what are those two logarithms doing here?
+
+> 💡 The $\log$ used here are in base $e$, so they should actually be written $\ln$.
+
+$y_i$, the actual value, can only be 0 or 1 (true or false, Gryffindor or not Gryffindor).
+
+So we only have two cases:
+
+- If $y_i = 0$, the first $\log$ is eliminated, and we are left with $- \log(1 - y_{\text{predicted}})$
+- If $y_i = 1$, the second $\log$ is eliminated, and we are left with $- \log(y_{\text{predicted}})$
+
+> The $-$ sign in front of the $\log$ did not appear magically, it is the one at the beginning of the equation, in the $- \frac{1}{m}$ factor.
+
+What this cost function does is give **exponential importance** to the error we make.
+
+![Negative log-loss function](./assets/neg_log.webp)
+
+> *See how the closer we are from 1, the lower $- \log(x)$ is, i.e. the less importance the difference is, and as we get closer to 0, the higher it is.*
+>
+> Example:
+>
+> - $y_i$ is 0, so the cost function is $- \log(1 - y_{\text{predicted}})$.
+> - We make a first hypothesis $y_{\text{predicted}} = 0.99$, very far from the actual value.
+> - The first cost is $- \log(1 - 0.99) = - \log(0.01) = 4.6$.
+> - We make a second hypothesis $y_{\text{predicted}} = 0.9$, a bit closer but still very far.
+> - The second cost is $- \log(1 - 0.9) = - \log(0.1) = 2.3$.
+>
+> The negative log-loss function makes the first hypothesis twice as bad as the second one, although they are only 0.1 apart.
+
 #### Derivative of the cost function
 
 # Resources
