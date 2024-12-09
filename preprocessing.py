@@ -17,7 +17,6 @@ def load_data(
         'Care of Magical Creatures',
         'Potions',
         'Flying',
-        'Muggle Studies',
     ]
 
     features = [
