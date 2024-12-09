@@ -2,14 +2,34 @@ import pandas as pd
 import numpy as np
 
 
-def load_data(path: str) -> pd.DataFrame:
+def load_data(
+    path: str,
+    dropna: bool = True
+) -> pd.DataFrame:
     """ Loads the .csv at the given path and returns a pandas dataframe.
     """
     df = pd.read_csv(path, index_col=False)
-    del df['Index']  # Delete Index column
-    df.dropna(inplace=True)  # Fill NaN values with 0
+
+    excluded = [
+        'Index',
+        'Hogwarts House',
+        'Arithmancy',
+        'Care of Magical Creatures',
+        'Potions',
+        'Flying',
+        'Muggle Studies',
+    ]
+
+    features = [
+        f
+        for f in df.select_dtypes('number').columns.tolist()
+        if f not in excluded
+    ]
+
+    if dropna:
+        df = df.dropna(subset=features)
+
     pd.options.display.float_format = '{:.1f}'.format  # 2 decimals only
-    features = df.select_dtypes('number').columns.tolist()
 
     return df, features
 
@@ -22,7 +42,7 @@ def train_test_split(
     if len(x) != len(y):
         raise ValueError('x and y have to be of same size.')
 
-    if not (0 < test_size < 1):
+    if not (0 <= test_size <= 1):
         raise ValueError('test_size must be between 0 and 1.')
 
     n = len(x)
