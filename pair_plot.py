@@ -13,8 +13,7 @@ def main():
         if len(sys.argv) != 2:
             raise IndexError('Please enter one argument.')
 
-        df = load_data(sys.argv[1])
-        features = df.select_dtypes('number').columns.tolist()
+        df, features = load_data(sys.argv[1])
         features_len = len(features)
         _, axes = plt.subplots(
             nrows=features_len,

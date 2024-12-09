@@ -21,10 +21,9 @@ def main():
         if len(sys.argv) != 2:
             raise IndexError('Please enter one argument.')
 
-        df = load_data(sys.argv[1])
+        df, features = load_data(sys.argv[1])
 
-        feature_columns = df.select_dtypes('number').columns.tolist()
-        describe_df = pd.DataFrame(columns=['Stat name', *feature_columns])
+        describe_df = pd.DataFrame(columns=['Stat name', *features])
 
         operations = {
             'Count': len,
@@ -44,7 +43,7 @@ def main():
                 operation,
                 *[  # "*" is the spread operator, like "...array" in JavaScript
                     operations[operation](df[column])
-                    for column in feature_columns
+                    for column in features
                 ]
             ] for operation in operations.keys()
         ]

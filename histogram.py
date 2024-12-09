@@ -22,9 +22,9 @@ def main():
         if len(sys.argv) != 2:
             raise IndexError('Please enter one argument.')
 
-        df = load_data(sys.argv[1])
-        feature_columns = df.select_dtypes('number').columns.tolist()
-        for feature in feature_columns:
+        df, features = load_data(sys.argv[1])
+        features = df.select_dtypes('number').columns.tolist()
+        for feature in features:
             _, ax = plt.subplots()
             to_histogram(df, feature, ax)
             plt.title(feature)

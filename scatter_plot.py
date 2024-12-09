@@ -24,10 +24,10 @@ def main():
         if len(sys.argv) != 2:
             raise IndexError('Please enter one argument.')
 
-        df = load_data(sys.argv[1])
-        feature_columns = df.select_dtypes('number').columns.tolist()
-        for feature in feature_columns:
-            for feature2 in feature_columns:
+        df, features = load_data(sys.argv[1])
+        features = df.select_dtypes('number').columns.tolist()
+        for feature in features:
+            for feature2 in features:
                 _, ax = plt.subplots()
                 to_scatter(
                     df=df,
