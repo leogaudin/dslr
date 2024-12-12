@@ -1,14 +1,16 @@
 import numpy as np
+from typing import Dict, List
 
 
 class LogisticRegression:
-    def __init__(self, learning_rate=0.001, max_iter=50000):
+    def __init__(self, learning_rate: float = 0.001, max_iter: int = 50000):
         """ Constructor for the LogisticRegression class.
         """
         self.learning_rate = learning_rate
         self.max_iter = max_iter
+        self.weights: Dict[str, np.ndarray] = {}
 
-    def fit(self, X, y):
+    def fit(self, X: np.ndarray, y: np.ndarray) -> None:
         """ Fit the model to the training data.
         """
         if X.shape[0] != y.shape[0]:
@@ -16,14 +18,9 @@ class LogisticRegression:
                 'Inputs and outputs must be vectors of same length'
             )
 
-        m = X.shape[0]
-        n = X.shape[1]
-
+        m, n = X.shape  # m = number of samples, n = number of features
         y = y.reshape(m, 1)
-
         classes = np.unique(y)
-
-        self.weights = {}
 
         for c in classes:
             weights_c = np.zeros((n, 1))
@@ -34,12 +31,11 @@ class LogisticRegression:
                 predictions = np.clip(predictions, 1e-13, 1 - 1e-13)
 
                 d_weight = (1 / m) * np.dot(X.T, predictions - y_c)
-
                 weights_c -= self.learning_rate * d_weight
 
             self.weights[c] = weights_c
 
-    def predict(self, X):
+    def predict(self, X: np.ndarray) -> List[Dict[str, float]]:
         """ Predict the output for the given input.
         """
         predictions = []
@@ -48,10 +44,9 @@ class LogisticRegression:
                 c: self.sigmoid(np.dot(entry, self.weights[c]))
                 for c in self.weights.keys()
             })
-
         return predictions
 
-    def score(self, X, y):
+    def score(self, X: np.ndarray, y: np.ndarray) -> float:
         """ Return the accuracy of the model on the given data.
         """
         predictions = self.predict(X)
@@ -61,21 +56,25 @@ class LogisticRegression:
             actual = y[i]
             if predicted == actual:
                 correct += 1
-
         return correct / len(X) * 100
 
-    def save(self, path):
+    def save(self, path: str) -> None:
         """ Save the model to the given path.
         """
         np.save(path, self.weights)
 
-    def load(self, path):
+    def load(self, path: str) -> None:
         """ Load the model from the given path.
         """
-        self.weights = np.load(path, allow_pickle=True).item()
+        try:
+            self.weights = np.load(path, allow_pickle=True).item()
+        except FileNotFoundError:
+            print(f"File not found: {path}")
+        except Exception as e:
+            print(f"Error loading model: {e}")
 
     @staticmethod
-    def sigmoid(z):
+    def sigmoid(z: np.ndarray) -> np.ndarray:
         """ Sigmoid function.
         """
         return 1 / (1 + np.exp(-z))
