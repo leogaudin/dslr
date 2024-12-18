@@ -24,7 +24,7 @@ def main():
         model = LogisticRegression()
         model.fit(X_train, Y_train)
         # print(model.score(X_train, Y_train))
-        model.save('weights')
+        model.save('model.safetensors')
 
     except BaseException as e:
         print(type(e).__name__, ':', e)

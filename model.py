@@ -1,5 +1,7 @@
 import numpy as np
 from typing import Dict, List
+import torch
+from safetensors.torch import save_file, safe_open
 
 
 class LogisticRegression:
@@ -28,7 +30,7 @@ class LogisticRegression:
             for _ in range(self.max_iter):
                 z = np.dot(X, weights_c)
                 predictions = self.sigmoid(z)
-                predictions = np.clip(predictions, 1e-13, 1 - 1e-13)
+                predictions = np.clip(predictions, 1e-10, 1 - 1e-10)
 
                 d_weight = (1 / m) * np.dot(X.T, predictions - y_c)
                 weights_c -= self.learning_rate * d_weight
@@ -61,13 +63,22 @@ class LogisticRegression:
     def save(self, path: str) -> None:
         """ Save the model to the given path.
         """
-        np.save(path, self.weights)
+        model = {
+            k: torch.from_numpy(v)
+            for k, v in self.weights.items()
+        }
+        save_file(model, path)
 
     def load(self, path: str) -> None:
         """ Load the model from the given path.
         """
         try:
-            self.weights = np.load(path, allow_pickle=True).item()
+            with safe_open("model.safetensors", framework="pt", device=0) as f:
+                self.weights = {
+                    k: f.get_tensor(k)
+                    for k in f.keys()
+                }
+
         except FileNotFoundError:
             print(f"File not found: {path}")
         except Exception as e:

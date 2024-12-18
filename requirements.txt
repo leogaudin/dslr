@@ -1,3 +1,5 @@
 matplotlib
 pandas
 numpy
+safetensors
+# pip install --pre torch --index-url https://download.pytorch.org/whl/nightly/cpu
