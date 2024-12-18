@@ -47,7 +47,9 @@ Let's first recap all the cryptic terms used in the subject:
 
 And worst of all, appendix VIII.1, *Mathematics*:
 
-![appendix](./assets/appendix.webp)
+<p align='center'>
+	<img src='./assets/appendix.webp' alt='Appendix' width='auto' />
+</p>
 
 > *What is this supposed to mean?*
 
@@ -57,7 +59,9 @@ Logistic Regression is a classification algorithm used to tell if an object is p
 
 Unlike linear regression which takes a scalar input and gives a scalar output (e.g. `price = mileage * weight`), logistic regression gives a probability of the input being part of a class (e.g. `[0, 1] = input * weight`).
 
-![Sigmoid Example](./assets/sigmoid_example.webp)
+<p align='center'>
+	<img src='./assets/sigmoid_example.webp' alt='Sigmoid Example' width='auto' />
+</p>
 
 > *Here, the sigmoid function gives the probability of a student passing their exam based on the number of hours they studied.*
 
@@ -65,7 +69,7 @@ Unlike linear regression which takes a scalar input and gives a scalar output (e
 
 Multi-classification is simply when you have more than 2 classes to classify.
 
-Instead of having a binary class like "obese" or "not obese", you have multiple classes like `Gryffindor`, `Hufflepuff`, `Ravenclaw`, or `Slytherin`.
+Instead of having a binary class like "passing the exam" or "not passing", you have multiple classes like `Gryffindor`, `Hufflepuff`, `Ravenclaw`, or `Slytherin`.
 
 That is where one-vs-all comes in.
 
@@ -106,7 +110,9 @@ $$
 
 This is the sigmoid function we talked about earlier, the blue line representing the probability of passing the exam.
 
-![Sigmoid curve](./assets/sigmoid_curve.gif)
+<p align='center'>
+	<img src='./assets/sigmoid_curve.gif' alt='Sigmoid curve' width='auto' />
+</p>
 
 > *Here is how the sigmoid curve changes based on the value of `z`. The higher `z` is, the steeper the curve is, i.e. there is a threshold where the probability goes from 0 to 1 almost instantly.*
 
@@ -120,7 +126,7 @@ $h_{\theta}(x)$ is the hypothesis we are making based on the input $x$ and the w
 
 We just learned what was this $g(z)$, but what about $\theta^T x$?
 
-The $T$ in $\theta^T$ means "transpose", which is a vector operation.
+The $T$ in $\theta^T$ means "transpose", which is a matrix operation.
 
 Indeed, we have many parameters in our dataset, not a single one like in `ft_linear_regression`. We therefore need to "group" them in a vector.
 
@@ -196,7 +202,9 @@ So we only have two cases:
 
 What this cost function does is give **exponential importance** to the error we make.
 
-![Negative log-loss function](./assets/neg_log.webp)
+<p align='center'>
+	<img src='./assets/neg_log.webp' alt='Negative log-loss function' width='auto' />
+</p>
 
 > See how the closer we are from 1, the lower $- \log(x)$ is, i.e. the less importance the difference is, and as we get closer to 0, the higher it is.
 >
