@@ -5,7 +5,7 @@ from safetensors.torch import save_file, safe_open
 
 
 class LogisticRegression:
-    def __init__(self, learning_rate: float = 0.001, max_iter: int = 50000):
+    def __init__(self, learning_rate: float = 0.1, max_iter: int = 42_000):
         """ Constructor for the LogisticRegression class.
         """
         self.learning_rate = learning_rate
@@ -31,6 +31,11 @@ class LogisticRegression:
                 z = np.dot(X, weights_c)
                 predictions = self.sigmoid(z)
                 predictions = np.clip(predictions, 1e-10, 1 - 1e-10)
+
+                # loss = np.sum(-y_c * np.log(predictions)
+                #               - (1 - y_c) * np.log(1 - predictions)) / m
+
+                # print(f'Loss: {loss}')
 
                 d_weight = (1 / m) * np.dot(X.T, predictions - y_c)
                 weights_c -= self.learning_rate * d_weight
