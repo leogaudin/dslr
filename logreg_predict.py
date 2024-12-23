@@ -3,6 +3,7 @@ from preprocessing import load_data
 import numpy as np
 import pandas as pd
 from model import LogisticRegression
+from scaler import StandardScaler
 
 
 def main():
@@ -13,8 +14,12 @@ def main():
         df, features = load_data(sys.argv[1], dropna=False)
         X_test = np.asarray(df[features])
 
+        scaler = StandardScaler()
+        scaler.load('scaler.npz')
+        X_test = scaler.transform(X_test)
+
         model = LogisticRegression()
-        model.load('weights.npy')
+        model.load('model.safetensors')
 
         results = model.predict(X_test)
 

@@ -1,3 +1,4 @@
+*.npz
 houses.csv
 *.png
 .DS_Store

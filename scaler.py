@@ -11,6 +11,8 @@ class StandardScaler:
 
     def load(self, filename):
         data = np.load(filename)
+        if 'mean' not in data or 'std' not in data:
+            raise ValueError('No mean or std in the file.')
         self.mean = data['mean']
         self.std = data['std']
 

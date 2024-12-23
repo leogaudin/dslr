@@ -69,7 +69,7 @@ class LogisticRegression:
         """ Save the model to the given path.
         """
         model = {
-            k: torch.from_numpy(v)
+            k: torch.from_numpy(v).to(torch.float32)
             for k, v in self.weights.items()
         }
         save_file(model, path)
@@ -78,9 +78,9 @@ class LogisticRegression:
         """ Load the model from the given path.
         """
         try:
-            with safe_open("model.safetensors", framework="pt", device=0) as f:
+            with safe_open(path, framework="pt", device="cpu") as f:
                 self.weights = {
-                    k: f.get_tensor(k)
+                    k: f.get_tensor(k).numpy()
                     for k in f.keys()
                 }
 
