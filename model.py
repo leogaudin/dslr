@@ -25,7 +25,11 @@ class LogisticRegression:
         classes = np.unique(y)
 
         for c in classes:
-            weights_c = np.zeros((n, 1))
+            weights_c = np.random.uniform(
+                -np.sqrt(6 / n), np.sqrt(6 / n),
+                (n, 1)
+            )
+
             y_c = np.where(y == c, 1, 0)
             for _ in range(self.max_iter):
                 z = np.dot(X, weights_c)
